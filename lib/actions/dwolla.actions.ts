@@ -2,19 +2,12 @@
 
 import { Client } from "dwolla-v2";
 
-const getEnvironment = (): "production" | "sandbox" => {
-  const environment = process.env.DWOLLA_ENV as string;
-
-  switch (environment) {
-    case "sandbox":
-      return "sandbox";
-    case "production":
-      return "production";
-    default:
-      throw new Error(
-        "Dwolla environment should either be set to `sandbox` or `production`"
-      );
+const getEnvironment = () => {
+  const env = process.env.DWOLLA_ENVIRONMENT;
+  if (env !== 'sandbox' && env !== 'production') {
+    return 'sandbox';  // 默认使用 sandbox
   }
+  return env;
 };
 
 const dwollaClient = new Client({
